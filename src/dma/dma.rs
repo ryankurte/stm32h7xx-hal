@@ -14,6 +14,7 @@ use core::marker::PhantomData;
 use crate::{
     adc,
     adc::Adc,
+    dac::{self, C1, C2},
     i2c::I2c,
     pac::{self, DMA1, DMA2, DMAMUX1},
     rcc::{rec, rec::ResetEnable},
@@ -1177,3 +1178,20 @@ peripheral_target_address!((
     P2M,
     DMAReq::Adc3Dma
 ));
+
+peripheral_target_address!(
+    (
+        INNER: C1<pac::DAC, dac::Enabled>,
+        dhr12r1,
+        u16,
+        M2P,
+        DMAReq::DacCh1Dma
+    ),
+    (
+        INNER: C2<pac::DAC, dac::Enabled>,
+        dhr12r2,
+        u16,
+        M2P,
+        DMAReq::DacCh2Dma
+    )
+);

@@ -160,6 +160,11 @@ macro_rules! dac {
                     _enabled: PhantomData,
                 }
             }
+
+            /// Returns a reference to the inner register block
+            pub fn inner(&self) -> &crate::stm32::dac::RegisterBlock {
+                unsafe { &(*$DAC::ptr()) }
+            }
         }
 
         /// DacOut implementation available in any Enabled/Disabled state
