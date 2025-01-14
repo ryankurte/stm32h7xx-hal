@@ -845,7 +845,7 @@ macro_rules! adc_hal {
                 ///
                 /// This method starts a conversion sequence with DMA
                 /// enabled. The DMA mode selected depends on the [`AdcDmaMode`] specified.
-                pub fn start_conversion_dma<PIN>(&mut self, _pin: &mut PIN, mode: AdcDmaMode)
+                pub fn start_conversion_dma<PIN>(&mut self, _pin: &mut PIN, mode: AdcDmaMode, continuous: bool)
                     where PIN: Channel<$ADC, ID = u8>,
                 {
                     let chan = PIN::channel();
@@ -860,8 +860,13 @@ macro_rules! adc_hal {
                         AdcDmaMode::Circular => 0b11,
                     }));
 
-                    // Set continuous mode
-                    self.rb.cfgr.modify(|_, w| w.cont().set_bit().discen().clear_bit() );
+                    // Select continuous or discontinuous mode
+                    if continuous {
+                        self.rb.cfgr.modify(|_, w| w.cont().set_bit().discen().clear_bit() );
+                    } else {
+                        self.rb.cfgr.modify(|_, w| w.cont().clear_bit().discen().set_bit());
+                    }
+
 
                     self.start_conversion_common(chan);
                 }

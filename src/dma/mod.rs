@@ -751,6 +751,11 @@ macro_rules! db_transfer_def {
             pub fn get_half_transfer_flag(&self) -> bool {
                 STREAM::get_half_transfer_flag()
             }
+
+            #[inline(always)]
+            pub fn get_periph_mut(&mut self) -> &mut PERIPHERAL {
+                &mut self.peripheral
+            }
         }
     };
 }
