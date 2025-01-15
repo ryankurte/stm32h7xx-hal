@@ -1193,5 +1193,19 @@ peripheral_target_address!(
         u16,
         M2P,
         DMAReq::DacCh2Dma
+    ),
+    (
+        INNER: C1<pac::DAC, dac::EnabledUnbuffered>,
+        dhr12r1,
+        u16,
+        M2P,
+        DMAReq::DacCh1Dma
+    ),
+    (
+        INNER: C2<pac::DAC, dac::EnabledUnbuffered>,
+        dhr12r2,
+        u16,
+        M2P,
+        DMAReq::DacCh2Dma
     )
 );
